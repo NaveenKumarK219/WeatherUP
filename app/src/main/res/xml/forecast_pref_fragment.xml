@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:title="Units"
+        android:key="units_key"
+        android:entries="@array/pref_units_options"
+        android:entryValues="@array/pref_units_values"
+        android:defaultValue="metric" />
+
+    <Preference
+        android:title="Location"
+        android:key="location_key"
+        android:defaultValue="Select Location" />
+
+</PreferenceScreen>
