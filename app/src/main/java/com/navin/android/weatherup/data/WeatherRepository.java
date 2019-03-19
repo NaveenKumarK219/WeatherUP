@@ -2,10 +2,17 @@ package com.navin.android.weatherup.data;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
+import androidx.preference.PreferenceManager;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.navin.android.weatherup.utilities.OpenWeatherUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -20,11 +27,13 @@ public class WeatherRepository {
     private static final String TAG = WeatherRepository.class.getSimpleName();
     private WeatherDao mWeatherDao;
     private LiveData<List<WeatherInfo>> mWeatherInfoList;
+    private Context applicationContext;
 
     public WeatherRepository(Application application){
         WeatherUpDatabase weatherDB = WeatherUpDatabase.getInstance(application);
         mWeatherDao = weatherDB.weatherDao();
         mWeatherInfoList = mWeatherDao.loadWeatherData();
+        applicationContext = application.getApplicationContext();
         if(mWeatherInfoList == null || (mWeatherInfoList != null && mWeatherInfoList.getValue() != null)){
             Log.i(TAG, "No  Weather Data in DB, Inserting now!");
             insertWeatherDataFromApi();
@@ -36,8 +45,18 @@ public class WeatherRepository {
     }
 
     public void insertWeatherDataFromApi(){
-        URL weatherUrl = OpenWeatherUtils.buildWeatherUrlWithLatLon("17","74");
-        new InsertWeatherDataAsyncTask(mWeatherDao).execute(weatherUrl);
+
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+        String locationString = defaultSharedPreferences.getString("location_key","{\"Lat\":\"17\",\"Long\":\"78\"}");
+        String unitsPref = defaultSharedPreferences.getString("units_key", "metric");
+        try {
+            JSONObject locationJson = new JSONObject(locationString);
+
+            URL weatherUrl = OpenWeatherUtils.buildWeatherUrlWithPreferences(locationJson.getString("Lat"), locationJson.getString("Long"), unitsPref);
+            new InsertWeatherDataAsyncTask(mWeatherDao).execute(weatherUrl);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

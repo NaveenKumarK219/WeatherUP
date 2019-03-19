@@ -11,6 +11,9 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.libraries.places.compat.Place;
 import com.google.android.libraries.places.compat.ui.PlaceAutocomplete;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import androidx.annotation.Nullable;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
@@ -74,11 +77,19 @@ public class ForecastPreferenceFragment extends PreferenceFragmentCompat impleme
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         SharedPreferences.Editor preferences = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        JSONObject locationJson = new JSONObject();
         if(requestCode == AUTO_COMPLETE_REQUEST_CODE){
             if(resultCode == Activity.RESULT_OK){
                 Place placeInfo = PlaceAutocomplete.getPlace(getContext(), data);
                 Log.i(TAG, "Place Details: "+ placeInfo.getId() +"::"+ placeInfo.getLatLng() + "::" + placeInfo.getName());
-                preferences.putString("location_key", placeInfo.getLatLng().toString());
+                try {
+                    locationJson.accumulate("Place", placeInfo.getName());
+                    locationJson.accumulate("Lat", placeInfo.getLatLng().latitude);
+                    locationJson.accumulate("Long", placeInfo.getLatLng().longitude);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                preferences.putString("location_key", locationJson.toString());
                 preferences.apply();
             } else if(resultCode == PlaceAutocomplete.RESULT_ERROR){
                 Log.e(TAG, "Error Occured");

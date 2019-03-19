@@ -20,7 +20,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:hardwareAccelerated="true">
 
-        <meta-data android:name="com.here.android.maps.appid" android:value="AIzaSyBCB-orNR2TQwVX0p9J31RPnh7gMZneh7Q"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBCB-orNR2TQwVX0p9J31RPnh7gMZneh7Q"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -105,13 +105,13 @@ public class OpenWeatherUtils {
         }
     }
 
-    public static URL buildWeatherUrlWithPreferences(String lat, String lon){
+    public static URL buildWeatherUrlWithPreferences(String lat, String lon, String units){
 
         Uri weatherUri = Uri.parse(OPEN_WEATHER_BASE_URL).buildUpon()
                 .appendQueryParameter(APPID_PARAM, API_KEY)
                 .appendQueryParameter(LATITUDE_PARAM, lat)
                 .appendQueryParameter(LONGITUDE_PARAM, lon)
-                .appendQueryParameter(UNITS_PARAM, DEFAULT_UNITS)
+                .appendQueryParameter(UNITS_PARAM, units)
                 .build();
 
         try {

@@ -10,7 +10,6 @@
 
     <Preference
         android:title="Location"
-        android:key="location_key"
-        android:defaultValue="Select Location" />
+        android:key="location_key" />
 
 </PreferenceScreen>
