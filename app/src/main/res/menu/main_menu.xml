@@ -8,13 +8,12 @@
         android:orderInCategory="100"
         android:title="@string/refresh"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
         android:orderInCategory="101"
         android:title="@string/settings"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
 </menu>

@@ -5,6 +5,7 @@ import android.util.JsonReader;
 import android.util.Log;
 
 import com.navin.android.weatherup.data.WeatherInfo;
+import com.navin.android.weatherup.data.WeatherNow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,88 +27,28 @@ import java.util.Scanner;
 public class OpenWeatherUtils {
 
     private static final String TAG = OpenWeatherUtils.class.getSimpleName();
-    private static final String OPEN_WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast";
+    private static final String OPEN_WEATHER_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast";
+    private static final String OPEN_WEATHER_FORECAST_TODAY_URL = "http://api.openweathermap.org/data/2.5/weather";
     private static final String APPID_PARAM = "appid";
     private static final String API_KEY = "944da5c89d0e0ac2bc371808c0841db2";
     // api.openweathermap.org/data/2.5/forecast?q={city name},{country code}
-    private static final String QUERY_PARAM = "q";
+    //private static final String QUERY_PARAM = "q";
     // api.openweathermap.org/data/2.5/forecast?id={city ID}
-    private static final String CITY_ID_PARAM = "id";
+    //private static final String CITY_ID_PARAM = "id";
     // api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}
     private static final String LATITUDE_PARAM = "lat";
     private static final String LONGITUDE_PARAM = "lon";
     // api.openweathermap.org/data/2.5/forecast?zip={zip code},{country code}
-    private static final String ZIPCODE_PARAM = "zip";
+    //private static final String ZIPCODE_PARAM = "zip";
     private static final String UNITS_PARAM = "units";
-    private static final String DEFAULT_UNITS = "metric";
+    //private static final String DEFAULT_UNITS = "metric";
 
     private static int mCityId;
     private static String mCityName;
 
-    /*public static URL buildWeatherUrlWithCityName(String cityName, String countryCode){
-
-        if(cityName == null){
-            return null;
-        }
-
-        StringBuilder queryString = new StringBuilder();
-        queryString.append(cityName);
-        queryString.append(countryCode == null? "" : ","+countryCode);
-
-        Uri weatherUri = Uri.parse(OPEN_WEATHER_BASE_URL).buildUpon()
-                .appendQueryParameter(APPID_PARAM, API_KEY)
-                .appendQueryParameter(QUERY_PARAM, queryString.toString())
-                .build();
-
-        try {
-            URL weatherUrl = new URL(weatherUri.toString());
-            Log.i(TAG, "Weather URL : "+ weatherUrl);
-            return weatherUrl;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-
-    /*public static URL buildWeatherUrlWithId(String cityId){
-
-        Uri weatherUri = Uri.parse(OPEN_WEATHER_BASE_URL).buildUpon()
-                .appendQueryParameter(APPID_PARAM, API_KEY)
-                .appendQueryParameter(CITY_ID_PARAM, cityId)
-                .build();
-
-        try {
-            URL weatherUrl = new URL(weatherUri.toString());
-            Log.i(TAG, "Weather URL : "+weatherUrl);
-            return weatherUrl;
-        } catch (MalformedURLException e){
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-
-    public static URL buildWeatherUrlWithLatLon(String lat, String lon){
-
-        Uri weatherUri = Uri.parse(OPEN_WEATHER_BASE_URL).buildUpon()
-                .appendQueryParameter(APPID_PARAM, API_KEY)
-                .appendQueryParameter(LATITUDE_PARAM, lat)
-                .appendQueryParameter(LONGITUDE_PARAM, lon)
-                .appendQueryParameter(UNITS_PARAM, DEFAULT_UNITS)
-                .build();
-
-        try {
-            URL weatherUrl = new URL(weatherUri.toString());
-            Log.i(TAG, "Weather URL: "+weatherUrl);
-            return weatherUrl;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public static URL buildWeatherUrlWithPreferences(String lat, String lon, String units){
 
-        Uri weatherUri = Uri.parse(OPEN_WEATHER_BASE_URL).buildUpon()
+        Uri weatherUri = Uri.parse(OPEN_WEATHER_FORECAST_URL).buildUpon()
                 .appendQueryParameter(APPID_PARAM, API_KEY)
                 .appendQueryParameter(LATITUDE_PARAM, lat)
                 .appendQueryParameter(LONGITUDE_PARAM, lon)
@@ -124,22 +65,22 @@ public class OpenWeatherUtils {
         }
     }
 
-    /*public static URL buildWeatherUrlWithZipcode(String zipcode){
-
-        Uri weatherUri = Uri.parse(OPEN_WEATHER_BASE_URL).buildUpon()
-                .appendQueryParameter(APPID_PARAM, API_KEY)
-                .appendQueryParameter(ZIPCODE_PARAM, zipcode)
-                .build();
-
+    public static URL buildTodaysWeatherUrlWithPreferences(String lat, String lon, String units){
+        Uri weatherUri = Uri.parse(OPEN_WEATHER_FORECAST_TODAY_URL).buildUpon()
+                        .appendQueryParameter(APPID_PARAM, API_KEY)
+                        .appendQueryParameter(LATITUDE_PARAM, lat)
+                        .appendQueryParameter(LONGITUDE_PARAM, lon)
+                        .appendQueryParameter(UNITS_PARAM, units)
+                        .build();
         try {
             URL weatherUrl = new URL(weatherUri.toString());
-            Log.i(TAG, "Weather URL: "+weatherUrl);
+            Log.i(TAG, "Weather URL: "+weatherUrl.toString());
             return weatherUrl;
-        } catch (MalformedURLException e) {
+        } catch (Exception e){
             e.printStackTrace();
             return null;
         }
-    }*/
+    }
 
     public static String getWeatherDataFromApi(URL weatherUrl) throws IOException {
         Log.i(TAG, "Connecting to API...");
@@ -166,6 +107,78 @@ public class OpenWeatherUtils {
             urlConnection.disconnect();
         }
 
+    }
+
+    public static WeatherNow getWeatherNowFromJsonResponse(String responseJson){
+        try(JsonReader jsonReader = new JsonReader(new StringReader(responseJson))) {
+            WeatherNow weatherNow = new WeatherNow();
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()){
+                String key = jsonReader.nextName();
+                if("weather".equals(key)){
+                    jsonReader.beginArray();
+                    while (jsonReader.hasNext()){
+                        jsonReader.beginObject();
+                        while (jsonReader.hasNext()){
+                            key = jsonReader.nextName();
+                            if("description".equals(key))
+                                weatherNow.setWeatherDesc(jsonReader.nextString());
+                            else if("icon".equals(key))
+                                weatherNow.setWeatherIcon(jsonReader.nextString());
+                            else jsonReader.skipValue();
+                        }
+                        jsonReader.endObject();
+                    }
+                    jsonReader.endArray();
+                } else if("main".equals(key)){
+                    jsonReader.beginObject();
+                    while (jsonReader.hasNext()){
+                        key = jsonReader.nextName();
+                        if("temp".equals(key))
+                            weatherNow.setTemperature(jsonReader.nextDouble());
+                        else if("pressure".equals(key))
+                            weatherNow.setPressure(jsonReader.nextDouble());
+                        else if("humidity".equals(key))
+                            weatherNow.setHumidity(jsonReader.nextDouble());
+                        else if("temp_min".equals(key))
+                            weatherNow.setMinTemp(jsonReader.nextDouble());
+                        else if("temp_max".equals(key))
+                            weatherNow.setMaxTemp(jsonReader.nextDouble());
+                    }
+                    jsonReader.endObject();
+                } else if("wind".equals(key)){
+                    jsonReader.beginObject();
+                    while (jsonReader.hasNext()){
+                        key = jsonReader.nextName();
+                        if("speed".equals(key))
+                            weatherNow.setWindSpeed(jsonReader.nextDouble());
+                        else if("deg".equals(key))
+                            weatherNow.setWindDirection(jsonReader.nextInt());
+                    }
+                    jsonReader.endObject();
+                } else if("dt".equals(key)){
+                    weatherNow.setEpochTime(jsonReader.nextInt());
+                } else if("sys".equals(key)){
+                    jsonReader.beginObject();
+                    while (jsonReader.hasNext()){
+                        key = jsonReader.nextName();
+                        if("sunrise".equals(key))
+                            weatherNow.setSunrise(jsonReader.nextInt());
+                        else if("sunset".equals(key))
+                            weatherNow.setSunset(jsonReader.nextInt());
+                        else jsonReader.skipValue();
+                    }
+                    jsonReader.endObject();
+                } else if("name".equals(key))
+                    weatherNow.setCityName(jsonReader.nextString());
+                else jsonReader.skipValue();
+            }
+            jsonReader.endObject();
+            return weatherNow;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static List<WeatherInfo> getWeatherListFromJsonResponse(String responseJsonString) throws JSONException, IOException {

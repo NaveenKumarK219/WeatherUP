@@ -10,6 +10,7 @@
 
     <Preference
         android:title="Location"
-        android:key="location_key" />
+        android:key="location_key"
+        android:icon="@android:drawable/ic_dialog_map" />
 
 </PreferenceScreen>

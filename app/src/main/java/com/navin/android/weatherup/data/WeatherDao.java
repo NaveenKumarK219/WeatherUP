@@ -26,4 +26,13 @@ public interface WeatherDao {
     @Query("DELETE FROM weatherinfo")
     void deleteAllWeatherData();
 
+    @Query("SELECT * FROM weather_now")
+    LiveData<WeatherNow> loadTodaysWeatherData();
+
+    @Insert
+    void insertTodaysWeatherData(WeatherNow weatherNow);
+
+    @Query("DELETE FROM weather_now")
+    void deleteTodaysOldWeatherData();
+
 }

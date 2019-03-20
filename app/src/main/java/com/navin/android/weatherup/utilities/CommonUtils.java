@@ -19,7 +19,7 @@ public class CommonUtils {
         return DateFormat.format("E d M", inDate).toString();
     }
 
-    public static String getReadableDate(Context context, long unixTimestamp){
+    public static String getReadableDate(long unixTimestamp){
         Date unixDate = new Date(unixTimestamp * 1000L);
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM HH:mm");
         return dateFormat.format(unixDate);

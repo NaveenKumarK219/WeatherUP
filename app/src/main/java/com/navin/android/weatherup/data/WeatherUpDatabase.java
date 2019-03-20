@@ -9,7 +9,7 @@ import android.util.Log;
 /**
  * Created by navinkumark on 2/6/19.
  */
-@Database(entities = {WeatherInfo.class}, version = 2, exportSchema = false)
+@Database(entities = {WeatherInfo.class, WeatherNow.class}, version = 3, exportSchema = false)
 public abstract class WeatherUpDatabase extends RoomDatabase {
 
     private static final String TAG = WeatherUpDatabase.class.getSimpleName();

@@ -1,23 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.navin.android.weatherup.MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv_weather_forecast"
-        android:padding="8dp">
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <ProgressBar
+    <TextView
+        android:id="@+id/now_weather_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/pb_loading_weather"
-        android:layout_gravity="center"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Thursday 19 Mar" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/now_weather_maxtemp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/rv_weather_forecast"
+        app:layout_constraintStart_toEndOf="@+id/now_weather_desc"
+        app:layout_constraintTop_toBottomOf="@+id/now_weather_date"
+        app:layout_constraintVertical_bias="0.397"
+        tools:text="25°" />
+
+    <TextView
+        android:id="@+id/now_weather_mintemp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/rv_weather_forecast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toEndOf="@+id/now_weather_maxtemp"
+        app:layout_constraintTop_toBottomOf="@+id/now_weather_date"
+        app:layout_constraintVertical_bias="0.395"
+        tools:text="19°" />
+
+    <ImageView
+        android:id="@+id/now_weather_icon_iv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/weather_icon"
+        android:scaleType="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/quantum_ic_cloud_off_vd_theme_24" />
+
+    <TextView
+        android:id="@+id/now_weather_desc"
+        android:layout_width="141dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/rv_weather_forecast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/now_weather_icon_iv"
+        tools:text="Sky Is Clear" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_weather_forecast"
+        android:layout_width="0dp"
+        android:layout_height="453dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.472" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
