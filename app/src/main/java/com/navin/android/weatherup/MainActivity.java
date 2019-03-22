@@ -3,29 +3,12 @@ package com.navin.android.weatherup;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.here.android.mpa.common.GeoCoordinate;
-import com.here.android.mpa.common.OnEngineInitListener;
-import com.here.android.mpa.mapping.Map;
-import com.here.android.mpa.mapping.SupportMapFragment;
-import com.here.android.mpa.search.DiscoveryLink;
-import com.here.android.mpa.search.DiscoveryRequest;
-import com.here.android.mpa.search.DiscoveryResultPage;
-import com.here.android.mpa.search.ErrorCode;
-import com.here.android.mpa.search.Place;
-import com.here.android.mpa.search.PlaceLink;
-import com.here.android.mpa.search.ResultListener;
-import com.here.android.mpa.search.SearchRequest;
 import com.navin.android.weatherup.data.WeatherInfo;
 import com.navin.android.weatherup.data.WeatherNow;
 import com.navin.android.weatherup.data.WeatherRepository;
@@ -64,9 +47,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         //mLoadingIndicator = findViewById(R.id.pb_loading_weather);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mForecastAdapter = new ForecastAdapter(this);
-        mainBinding.rvWeatherForecast.setAdapter(mForecastAdapter);
-        mainBinding.rvWeatherForecast.setLayoutManager(new LinearLayoutManager(this));
-        mainBinding.rvWeatherForecast.setHasFixedSize(true);
+        mForecastRecyclerView = mainBinding.rvWeatherForecast;
+        mForecastRecyclerView.setAdapter(mForecastAdapter);
+        mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mForecastRecyclerView.setHasFixedSize(true);
+        mLoadingIndicator = mainBinding.pbLoadingWeather;
 
         mWeatherRepository = new WeatherRepository(getApplication());
         getWeatherData();
@@ -92,10 +77,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onChanged(WeatherNow weatherNow) {
                 if(weatherNow != null){
                     Glide.with(getApplicationContext()).load("http://openweathermap.org/img/w/"+weatherNow.getWeatherIcon()+".png").into(mainBinding.nowWeatherIconIv);
+                    mainBinding.tvWeatherLocation.setText(weatherNow.getCityName());
                     mainBinding.nowWeatherDate.setText(CommonUtils.getReadableDate(weatherNow.getEpochTime()));
                     mainBinding.nowWeatherDesc.setText(weatherNow.getWeatherDesc());
-                    mainBinding.nowWeatherMaxtemp.setText(String.valueOf(weatherNow.getMaxTemp()));
-                    mainBinding.nowWeatherMintemp.setText(String.valueOf(weatherNow.getMinTemp()));
+                    mainBinding.nowWeatherMaxtemp.setText(CommonUtils.formatTemperature(weatherNow.getMaxTemp()));
+                    mainBinding.nowWeatherMintemp.setText(CommonUtils.formatTemperature(weatherNow.getMinTemp()));
                 }
 
             }

@@ -51,15 +51,13 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     public void onBindViewHolder(ForecastAdapterViewHolder holder, int position) {
 
         WeatherInfo weatherInfo = mWeatherInfoList.get(position);
-        String weatherDate = CommonUtils.getReadableDate(weatherInfo.getEpochTime());
-        String tempInfo = String.valueOf(weatherInfo.getTemperature()) + "\u00B0";
-        String weatherDesc = weatherInfo.getWeatherDescription();
-        String weatherSummary = weatherDate +" - "+ tempInfo +" - "+ weatherDesc;
 
-        holder.mDateTextView.setText(weatherDate);
-        holder.mForecastDescView.setText(weatherDesc);
-        holder.mHighTempView.setText(String.valueOf(weatherInfo.getMaxTemp()).concat("\u00B0"));
-        holder.mLowTempView.setText(String.valueOf(weatherInfo.getMinTemp()).concat("\u00B0"));
+        holder.mDateTextView.setText(CommonUtils.getReadableDate(weatherInfo.getEpochTime()));
+        holder.mForecastDescView.setText(weatherInfo.getWeatherDescription());
+        holder.mPressureView.setText(String.valueOf(weatherInfo.getPressure()).concat(" hPa"));
+        holder.mHumidity.setText(String.valueOf(weatherInfo.getHumidity()).concat(" %"));
+        holder.mHighTempView.setText(CommonUtils.formatTemperature(weatherInfo.getMaxTemp()));
+        holder.mLowTempView.setText(CommonUtils.formatTemperature(weatherInfo.getMinTemp()));
         Glide.with(mContext).load("http://openweathermap.org/img/w/"+weatherInfo.getWeatherIcon()+".png").into(holder.mForecastImgView);
 
     }
@@ -79,6 +77,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         private TextView mForecastDescView;
         private TextView mHighTempView;
         private TextView mLowTempView;
+        private TextView mPressureView;
+        private TextView mHumidity;
 
         public ForecastAdapterViewHolder(View itemView) {
             super(itemView);
@@ -87,6 +87,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             mForecastDescView = itemView.findViewById(R.id.forecast_desc_tv);
             mHighTempView = itemView.findViewById(R.id.high_temp_tv);
             mLowTempView = itemView.findViewById(R.id.low_temp_tv);
+            mPressureView = itemView.findViewById(R.id.pressure_tv);
+            mHumidity = itemView.findViewById(R.id.humidity_tv);
         }
     }
 }

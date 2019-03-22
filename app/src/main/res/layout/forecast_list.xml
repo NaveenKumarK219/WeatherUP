@@ -10,57 +10,86 @@
 
     <ImageView
         android:id="@+id/weather_icon_iv"
-        android:layout_width="95dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/weather_icon"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
         app:srcCompat="@drawable/quantum_ic_cloud_off_vd_theme_24" />
 
     <TextView
         android:id="@+id/forecast_date_tv"
-        android:layout_width="129dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintStart_toEndOf="@+id/weather_icon_iv"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="Thursday 19 Mar" />
 
     <TextView
         android:id="@+id/forecast_desc_tv"
-        android:layout_width="129dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        tools:text="Sky Is Clear"
-        app:layout_constraintStart_toEndOf="@+id/weather_icon_iv"
-        app:layout_constraintTop_toBottomOf="@+id/forecast_date_tv" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/forecast_date_tv"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        tools:text="Sky Is Clear" />
 
     <TextView
         android:id="@+id/high_temp_tv"
         android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/low_temp_tv"
-        app:layout_constraintStart_toEndOf="@+id/forecast_date_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/low_temp_tv"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="26°" />
 
     <TextView
         android:id="@+id/low_temp_tv"
         android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
+        android:layout_height="wrap_content"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/high_temp_tv"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/high_temp_tv"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/high_temp_tv"
         tools:text="19°" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/pressure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/forecast_date_tv"
+        tools:text="9.6Psi" />
+
+    <TextView
+        android:id="@+id/humidity_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_blue_dark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/pressure_tv"
+        app:layout_constraintStart_toStartOf="@+id/pressure_tv"
+        app:layout_constraintTop_toBottomOf="@+id/pressure_tv"
+        tools:text="46%" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="180dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

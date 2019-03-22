@@ -24,4 +24,8 @@ public class CommonUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM HH:mm");
         return dateFormat.format(unixDate);
     }
+
+    public static String formatTemperature(double temp){
+        return String.valueOf((int)temp).concat("\u00B0");
+    }
 }
