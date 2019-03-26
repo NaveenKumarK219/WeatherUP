@@ -1,6 +1,11 @@
 package com.navin.android.weatherup;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.navin.android.weatherup.data.WeatherNow;
 import com.navin.android.weatherup.data.WeatherRepository;
@@ -10,6 +15,7 @@ import com.navin.android.weatherup.utilities.CommonUtils;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -51,4 +57,30 @@ public class WeatherDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private Intent shareForecastIntent(){
+
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText("WeatherUP : \n" + dataBinding.tvCityname.getText() + "\n"
+                        + dataBinding.tvWeatherDate.getText() + "\n"
+                        + "Max Temp: " + dataBinding.tvMaxTemp.getText() + "\n"
+                        + "Min Temp: " + dataBinding.tvMinTemp.getText() + "\n"
+                        + dataBinding.tvPressure.getText() + "\n"
+                        + dataBinding.tvHumidity.getText())
+                .setChooserTitle("Share Weather Data To...")
+                .createChooserIntent();
+
+        return shareIntent;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.details_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_share);
+        item.setIntent(shareForecastIntent());
+        return true;
+    }
+
+
 }
