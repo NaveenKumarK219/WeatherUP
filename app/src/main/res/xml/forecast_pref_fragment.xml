@@ -6,7 +6,8 @@
         android:key="units_key"
         android:entries="@array/pref_units_options"
         android:entryValues="@array/pref_units_values"
-        android:defaultValue="metric" />
+        android:defaultValue="metric"
+        android:icon="@drawable/ic_wi_thermometer"/>
 
     <Preference
         android:title="Location"

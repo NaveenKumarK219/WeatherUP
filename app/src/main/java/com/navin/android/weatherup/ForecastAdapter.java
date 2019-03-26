@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.navin.android.weatherup.data.WeatherInfo;
 import com.navin.android.weatherup.utilities.CommonUtils;
 
@@ -54,11 +53,12 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
         holder.mDateTextView.setText(CommonUtils.getReadableDate(weatherInfo.getEpochTime()));
         holder.mForecastDescView.setText(weatherInfo.getWeatherDescription());
-        holder.mPressureView.setText(String.valueOf(weatherInfo.getPressure()).concat(" hPa"));
-        holder.mHumidity.setText(String.valueOf(weatherInfo.getHumidity()).concat(" %"));
-        holder.mHighTempView.setText(CommonUtils.formatTemperature(weatherInfo.getMaxTemp()));
-        holder.mLowTempView.setText(CommonUtils.formatTemperature(weatherInfo.getMinTemp()));
-        Glide.with(mContext).load("http://openweathermap.org/img/w/"+weatherInfo.getWeatherIcon()+".png").into(holder.mForecastImgView);
+        holder.mPressureView.setText(CommonUtils.formatWeatherInfo(weatherInfo.getPressure(), "pressure"));
+        holder.mHumidity.setText(CommonUtils.formatWeatherInfo(weatherInfo.getHumidity(), "humidity"));
+        holder.mHighTempView.setText(CommonUtils.formatWeatherInfo(weatherInfo.getMaxTemp(), "temperature"));
+        holder.mLowTempView.setText(CommonUtils.formatWeatherInfo(weatherInfo.getMinTemp(), "temperature"));
+        int iconRes = mContext.getResources().getIdentifier("ic_"+weatherInfo.getWeatherIcon(), "drawable", mContext.getPackageName());
+        holder.mForecastImgView.setImageResource(iconRes);
 
     }
 

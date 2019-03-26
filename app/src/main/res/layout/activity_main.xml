@@ -4,110 +4,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.navin.android.weatherup.MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/now_weather_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/now_weather_icon_iv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_weather_location"
-            tools:text="Thursday 19 Mar" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:onClick="showWeatherDetails">
 
-        <TextView
-            android:id="@+id/now_weather_maxtemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:textSize="32sp"
-            app:layout_constraintBottom_toBottomOf="@+id/now_weather_icon_iv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/now_weather_icon_iv"
-            tools:text="25°" />
+            <TextView
+                android:id="@+id/now_weather_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                app:layout_constraintBottom_toTopOf="@+id/now_weather_icon_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_weather_location"
+                tools:text="Thursday 19 Mar" />
 
-        <TextView
-            android:id="@+id/now_weather_mintemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/now_weather_desc"
-            app:layout_constraintEnd_toEndOf="@+id/now_weather_maxtemp"
-            app:layout_constraintStart_toStartOf="@+id/now_weather_maxtemp"
-            tools:text="19°" />
+            <TextView
+                android:id="@+id/now_weather_maxtemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:textSize="32sp"
+                app:layout_constraintBottom_toBottomOf="@+id/now_weather_icon_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.45"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/now_weather_icon_iv"
+                tools:text="25°" />
 
-        <ImageView
-            android:id="@+id/now_weather_icon_iv"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/weather_icon"
-            app:layout_constraintBottom_toTopOf="@+id/rv_weather_forecast"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintHorizontal_bias="0.462"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.835"
-            tools:src="@drawable/quantum_ic_cloud_off_vd_theme_24" />
+            <TextView
+                android:id="@+id/now_weather_mintemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/now_weather_desc"
+                app:layout_constraintEnd_toEndOf="@+id/now_weather_maxtemp"
+                app:layout_constraintStart_toStartOf="@+id/now_weather_maxtemp"
+                tools:text="19°" />
 
-        <TextView
-            android:id="@+id/now_weather_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/now_weather_icon_iv"
-            app:layout_constraintEnd_toEndOf="@+id/now_weather_icon_iv"
-            app:layout_constraintStart_toStartOf="@+id/now_weather_icon_iv"
-            tools:text="Sky Is Clear" />
+            <ImageView
+                android:id="@+id/now_weather_icon_iv"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/weather_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintHorizontal_bias="0.179"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.738"
+                tools:src="@drawable/quantum_ic_cloud_off_vd_theme_24" />
+
+            <TextView
+                android:id="@+id/now_weather_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/now_weather_icon_iv"
+                app:layout_constraintEnd_toEndOf="@+id/now_weather_icon_iv"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/now_weather_icon_iv"
+                tools:text="Sky Is Clear" />
+
+            <ProgressBar
+                android:id="@+id/pb_loading_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.553" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="202dp" />
+
+            <TextView
+                android:id="@+id/tv_weather_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@+id/now_weather_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Hyderabad, IN" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_weather_forecast"
-            android:layout_width="0dp"
-            android:layout_height="427dp"
-            android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="8dp" />
+    </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/pb_loading_weather"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.472" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="202dp" />
 
-        <TextView
-            android:id="@+id/tv_weather_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toTopOf="@+id/now_weather_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Hyderabad, IN" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

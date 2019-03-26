@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             @Override
             public void onChanged(WeatherNow weatherNow) {
                 if(weatherNow != null){
-                    Glide.with(getApplicationContext()).load("http://openweathermap.org/img/w/"+weatherNow.getWeatherIcon()+".png").into(mainBinding.nowWeatherIconIv);
+                    int iconRes = getResources().getIdentifier("ic_"+weatherNow.getWeatherIcon(), "drawable", getPackageName());
+                    mainBinding.nowWeatherIconIv.setImageResource(iconRes);
                     mainBinding.tvWeatherLocation.setText(weatherNow.getCityName());
                     mainBinding.nowWeatherDate.setText(CommonUtils.getReadableDate(weatherNow.getEpochTime()));
                     mainBinding.nowWeatherDesc.setText(weatherNow.getWeatherDesc());
@@ -127,5 +128,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             getWeatherData();
             PREFERENCES_HAVE_CHANGED = false;
         }
+    }
+
+    public void showWeatherDetails(View view){
+        Intent detailsIntent = new Intent(this, WeatherDetailsActivity.class);
+        startActivity(detailsIntent);
     }
 }
