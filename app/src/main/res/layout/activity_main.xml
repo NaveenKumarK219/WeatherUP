@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.738"
-                tools:src="@drawable/quantum_ic_cloud_off_vd_theme_24" />
+                tools:src="@drawable/ic_02d" />
 
             <TextView
                 android:id="@+id/now_weather_desc"
